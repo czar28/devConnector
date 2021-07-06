@@ -1,0 +1,4 @@
+{
+    "mongoURI": "mongodb+srv://czar28:c123z123a123r123@shashwatcluster.za1gh.mongodb.net/myFirstDatabase?retryWrites=true&w=majority",
+    "mySecretKey":"Super_seceret_Key"
+}
