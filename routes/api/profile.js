@@ -6,6 +6,7 @@ const config = require('config');
 const { check, validationResult } = require('express-validator/check');
 const Profile = require('../../models/Profile');
 const User = require('../../models/User');
+const Post = require('../../models/Post');
 
 //@route   GET api/profile/me
 //@desc    get current users profile
@@ -68,7 +69,7 @@ router.post(
     profileFields.user = req.user.id;
     if (company) profileFields.company = company;
     if (website) profileFields.website = website;
-    if (location) profileFields.loaction = location;
+    if (location) profileFields.location = location;
     if (bio) profileFields.bio = bio;
     if (status) profileFields.status = status;
     if (githubusername) profileFields.githubusername = githubusername;
@@ -77,6 +78,7 @@ router.post(
 
     //Build Social object
     profileFields.social = {};
+
     if (youtube) profileFields.social.youtube = youtube;
     if (twitter) profileFields.social.twitter = twitter;
     if (facebook) profileFields.social.facebook = facebook;
@@ -146,6 +148,9 @@ router.get('/user/:user_id', async (req, res) => {
 
 router.delete('/', auth, async (req, res) => {
   try {
+    //Remove User Posts
+    await Post.deleteMany({ user: req.user.id });
+
     await Profile.findOneAndRemove({ user: req.user.id });
     await User.findOneAndRemove({ _id: req.user.id });
     return res.json({ msg: 'user deleted' });
@@ -285,9 +290,9 @@ router.get('/github/:username', async (req, res) => {
       headers: { 'user-agent': 'node.js' },
     };
     request(options, (error, response, body) => {
-      if (error) console.log(error);
-      if (response.statusCode != 200)
-        res.status(404).json({ msg: 'NO github profile found' });
+      if (error) console.error(error);
+      // if (response.statusCode != 200)
+      //   res.status(404).json({ msg: 'No github profile found' });
       res.json(JSON.parse(body));
     });
   } catch (error) {
