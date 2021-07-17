@@ -1,5 +1,5 @@
 {
-    "mongoURI": "mongodb+srv://czar28:c123z123a123r123@shashwatcluster.za1gh.mongodb.net/myFirstDatabase?retryWrites=true&w=majority",
+    "mongoURI": "MONGO_uri",
     "mySecretKey":"Super_seceret_Key",
     "githubclientid":"aa5549906a0763b4068b",
     "githubsecret":"1f0e69876f933181c50c004c15644bc69ef7949a"
